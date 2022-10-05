@@ -60,13 +60,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="zKp-Au-Y26">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="120" id="zKp-Au-Y26" customClass="TweetCellTableViewCell" customModule="Twitter" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zKp-Au-Y26" id="mMd-iK-u0x">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nio-4y-R45">
+                                            <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="0Rg-QA-Xgz"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="65" id="5xN-sR-BcX"/>
+                                                <constraint firstAttribute="height" constant="65" id="QU8-JJ-VmV"/>
+                                                <constraint firstAttribute="width" constant="65" id="t3h-Gi-FBg"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Phi-hh-zch">
+                                            <rect key="frame" x="75" y="11" width="85" height="23"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2m-yv-Y9l">
+                                            <rect key="frame" x="73" y="38" width="321" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="g2m-yv-Y9l" firstAttribute="leading" secondItem="Nio-4y-R45" secondAttribute="trailing" constant="10" id="AIm-sG-JtH"/>
+                                        <constraint firstItem="g2m-yv-Y9l" firstAttribute="top" secondItem="Phi-hh-zch" secondAttribute="bottom" constant="4" id="DMG-jN-Upd"/>
+                                        <constraint firstItem="Nio-4y-R45" firstAttribute="leading" secondItem="mMd-iK-u0x" secondAttribute="leading" id="Hmd-IB-MWL"/>
+                                        <constraint firstItem="g2m-yv-Y9l" firstAttribute="leading" secondItem="Nio-4y-R45" secondAttribute="trailing" constant="8" id="Jb6-5p-NII"/>
+                                        <constraint firstItem="g2m-yv-Y9l" firstAttribute="leading" secondItem="Nio-4y-R45" secondAttribute="trailing" constant="8" id="KAO-8N-a8r"/>
+                                        <constraint firstItem="Nio-4y-R45" firstAttribute="leading" secondItem="mMd-iK-u0x" secondAttribute="leading" constant="2" id="Qga-Kj-VWV"/>
+                                        <constraint firstItem="g2m-yv-Y9l" firstAttribute="top" secondItem="Phi-hh-zch" secondAttribute="bottom" constant="4" id="U7m-pb-nRe"/>
+                                        <constraint firstItem="Nio-4y-R45" firstAttribute="top" secondItem="mMd-iK-u0x" secondAttribute="top" id="WnQ-B4-eJX"/>
+                                        <constraint firstItem="Nio-4y-R45" firstAttribute="leading" secondItem="mMd-iK-u0x" secondAttribute="leading" id="Xub-Sw-pSU"/>
+                                        <constraint firstItem="Phi-hh-zch" firstAttribute="leading" secondItem="Nio-4y-R45" secondAttribute="trailing" constant="8" id="b7c-eD-A7G"/>
+                                        <constraint firstItem="Phi-hh-zch" firstAttribute="leading" secondItem="Nio-4y-R45" secondAttribute="trailing" constant="10" id="bAw-UP-fum"/>
+                                        <constraint firstItem="Phi-hh-zch" firstAttribute="top" secondItem="mMd-iK-u0x" secondAttribute="topMargin" id="ewm-5T-qju"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="g2m-yv-Y9l" secondAttribute="trailing" id="nzk-jf-Fx4"/>
+                                        <constraint firstItem="Nio-4y-R45" firstAttribute="leading" secondItem="mMd-iK-u0x" secondAttribute="leading" id="rYL-fi-Dlg"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="profileImageView" destination="Nio-4y-R45" id="oG7-l6-sNp"/>
+                                    <outlet property="tweetContent" destination="g2m-yv-Y9l" id="9AX-R2-npU"/>
+                                    <outlet property="userNameLabel" destination="Phi-hh-zch" id="bxy-Gi-jec"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -85,7 +129,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uqi-Pj-1yg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="663" y="905"/>
+            <point key="canvasLocation" x="662.31884057971024" y="904.6875"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="64k-Dg-cQP">

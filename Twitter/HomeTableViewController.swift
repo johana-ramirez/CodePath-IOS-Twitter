@@ -9,6 +9,11 @@
 import UIKit
 
 class HomeTableViewController: UITableViewController {
+    
+    var tweetArray = [NSDictionary]()
+    var numberOfTweet: Int!
+    
+    
     //button for logout
     @IBAction func onLogout(_ sender: Any) {
         TwitterAPICaller.client?.logout()
@@ -16,9 +21,46 @@ class HomeTableViewController: UITableViewController {
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
     }
     
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCellTableViewCell //exactly that type !
+        
+        let user = tweetArray[indexPath.row]["user"] as! NSDictionary
+        
+        cell.userNameLabel.text = user["name"] as? String
+        
+        cell.tweetContent.text = tweetArray[indexPath.row]["text"] as! String
+        
+        return cell
+    }
+    
+    func loadTweet(){
+        
+        let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        numberOfTweet = 10
+        let myParams = ["count": numberOfTweet]
+        //multiple dictionaries for tweets
+        TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success:
+            { (tweets: [NSDictionary]) in //results is refered as tweets
+            
+            self.tweetArray.removeAll() //removes old tweet array
+            for tweet in tweets {
+                self.tweetArray.append(tweet) //add new tweets to array
+            }
+            
+            self.tableView.reloadData() //reload data with new content
+             
+        }, failure: { (Error) in
+            print("Could not retreive tweets! D:")
+            print(Error.localizedDescription)
+        })
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.rowHeight = 170
+        loadTweet()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -30,12 +72,12 @@ class HomeTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return tweetArray.count
     }
 
     /*
