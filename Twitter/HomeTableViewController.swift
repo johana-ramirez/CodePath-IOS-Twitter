@@ -13,6 +13,7 @@ class HomeTableViewController: UITableViewController {
     var tweetArray = [NSDictionary]()
     var numberOfTweet: Int!
     
+    let myRefreshControl = UIRefreshControl()
     
     //button for logout
     @IBAction func onLogout(_ sender: Any) {
@@ -27,13 +28,27 @@ class HomeTableViewController: UITableViewController {
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
         
         cell.userNameLabel.text = user["name"] as? String
-        
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int //double check its int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         cell.tweetContent.text = tweetArray[indexPath.row]["text"] as! String
+        
+        let imageUrl = URL(string: (user["profile_image_url_https"] as? String)!)
+        let data = try? Data(contentsOf: imageUrl!)
+        
+        if let imageData = data {
+            cell.profileImageView.image = UIImage(data: imageData)
+        }
         
         return cell
     }
     
-    func loadTweet(){
+    override func viewDidAppear(_ animated: Bool) { //updates your tweet to show
+        super.viewDidAppear(animated)
+        self.loadTweet()
+    }
+    
+    @objc func loadTweet(){
         
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         numberOfTweet = 10
@@ -48,6 +63,7 @@ class HomeTableViewController: UITableViewController {
             }
             
             self.tableView.reloadData() //reload data with new content
+            self.myRefreshControl.endRefreshing() //end refreshing wheel 
              
         }, failure: { (Error) in
             print("Could not retreive tweets! D:")
@@ -61,6 +77,9 @@ class HomeTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 170
         loadTweet()
+        
+        myRefreshControl.addTarget(self, action: #selector(loadTweet), for: .valueChanged)
+        tableView.refreshControl = myRefreshControl //which refresh control
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
